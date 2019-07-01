@@ -1,0 +1,11 @@
+name: null
+
+channels:
+  - defaults
+  - conda-forge
+
+dependencies:
+  - jupyterlab=1.0.0
+  - pandas=0.24
+  - scikit-learn=0.21
+
