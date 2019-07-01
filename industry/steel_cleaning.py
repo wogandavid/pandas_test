@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 # read in CSV
-steel = pd.read_csv('IS_production.csv', delimiter=',')
+steel = pd.read_csv('IS_production2.csv')
 
 # remove 'dummy' information
 steel = steel.drop(['Label1', 'Number'], axis=1).loc[steel['Label2'] != 'DUM1'].loc[steel['Label2'] != 'DUM2']
@@ -15,7 +15,13 @@ steel_projections = steel.loc[:,'2017':'2050']
 # separate GDP, population, and steel production
 GDP = steel_history.loc[steel_history['Indicator'] == 'GDP'].drop(['Indicator'], axis=1).set_index('Economy')
 Pop = steel_history.loc[steel_history['Indicator'] == 'POP'].drop(['Indicator'], axis=1).set_index('Economy')
-ITM = steel_history.loc[steel_history['Indicator'] == 'ITM'].drop(['Indicator'], axis=1).set_index('Economy').replace({'-1':'0'})
+ITM = steel_history.loc[steel_history['Indicator'] == 'ITM'].drop(['Indicator'], axis=1).set_index('Economy').replace(-1,0)
 
-# divide to find per capita - doesn't work
-GDP.div(Pop)
+# divide to find per capita
+GDP_per_capita = GDP.div(Pop)
+Production_per_capita = ITM.div(Pop)
+
+GDP_per_capita_ln = np.log(GDP_per_capita)
+Production_per_capita_ln = np.log(Production_per_capita)
+
+# regression
