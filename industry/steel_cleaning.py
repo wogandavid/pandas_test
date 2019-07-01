@@ -15,6 +15,7 @@ steel_projections = steel.loc[:,'2017':'2050']
 # separate GDP, population, and steel production
 GDP = steel_history.loc[steel_history['Indicator'] == 'GDP'].drop(['Indicator'], axis=1).set_index('Economy')
 Pop = steel_history.loc[steel_history['Indicator'] == 'POP'].drop(['Indicator'], axis=1).set_index('Economy')
-ITM = steel_history.loc[steel_history['Indicator'] == 'ITM'].drop(['Indicator'], axis=1).set_index('Economy')
+ITM = steel_history.loc[steel_history['Indicator'] == 'ITM'].drop(['Indicator'], axis=1).set_index('Economy').replace({'-1':'0'})
 
-ITM.replace({'-1':'0'}, inplace=True)
+# divide to find per capita - doesn't work
+GDP.div(Pop)
