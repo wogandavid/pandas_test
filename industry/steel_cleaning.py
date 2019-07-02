@@ -4,11 +4,12 @@ import pandas as pd
 year = list(range(1980,2016))
 
 # read in CSV
-steel = pd.read_csv('IS_production2.csv', index_col=['Economy','Indicator']).transpose()
+steel = pd.read_csv('IS_production2.csv', index_col=['Indicator','Economy'])
+steel = steel.stack().unstack(0)
 
-# remove 'dummy' information
-#steel = steel.drop(['Label1', 'Number'], axis=1).loc[steel['Label2'] != 'DUM1'].loc[steel['Label2'] != 'DUM2']
-#steel = steel.rename(columns={'Label2':'Indicator'}).reset_index(drop=True)
+steel['GDP_per_capita_ln'] = np.log(steel['GDP'].div(steel['POP']))
+steel['Production_per_capita_ln'] = np.log(steel['ITM'].div(steel['POP']))
+
 
 # separate historical data from projections
 steel_history = steel.loc[:,'Indicator':'2016']
