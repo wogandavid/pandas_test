@@ -8,7 +8,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
 # read in prepared data from CSV
-SteelDataHistoricalPrepared = pd.read_csv('SteelDataHistoricalPrepared.csv')
+SteelDataHistoricalPrepared = pd.read_csv('modified\SteelDataHistoricalPrepared.csv')
 
 # perform regression over one economy as a test
 SteelDataHistoricalPreparedAUS = SteelDataHistoricalPrepared[SteelDataHistoricalPrepared.Economy == '01_AUS']

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # read in prepared data from CSV
-SteelDataHistoricalPrepared = pd.read_csv(r'C:\GitHub\pandas_test\tidy\modified\SteelDataHistoricalPrepared.csv')
+SteelDataHistoricalPrepared = pd.read_csv('modified\SteelDataHistoricalPrepared.csv')
 
 # plot using seaborn
 g = sns.lmplot(x="GDPperCapita", 

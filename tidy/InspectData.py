@@ -8,7 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # read in historical data
-SteelDataHistorical = pd.read_csv(r'C:\GitHub\pandas_test\tidy\modified\SteelDataHistorical.csv')
+SteelDataHistorical = pd.read_csv('modified\SteelDataHistorical.csv')
 
 # Calculate GDP per capita and production per capita
 SteelDataHistorical['GDPperCapita'] = SteelDataHistorical['GDP'].div(SteelDataHistorical['Population'])
@@ -35,4 +35,4 @@ SteelDataHistorical[SteelDataHistorical.SteelProductionperCapita < 0] = np.NaN
 SteelDataHistorical.dropna(inplace=True)
 
 # write prepared data to csv
-SteelDataHistorical.to_csv(r'C:\GitHub\pandas_test\tidy\modified\SteelDataHistoricalPrepared.csv', index=False)
+SteelDataHistorical.to_csv('modified\SteelDataHistoricalPrepared.csv', index=False)

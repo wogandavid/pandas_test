@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 # read in tidy steel data
-SteelData = pd.read_csv(r'C:\GitHub\pandas_test\tidy\modified\molten.csv')
+SteelData = pd.read_csv('modified\molten.csv')
 
 # rename the columns
 NewNames = {'ITM':'SteelProduction','POP':'Population'}
@@ -20,5 +20,5 @@ SteelDataHistorical = SteelData[SteelData.Year <= 2016]
 SteelDataProjection = SteelData[SteelData.Year > 2016]
 
 # write separated dataframes to csv
-SteelDataHistorical.to_csv(r'C:\GitHub\pandas_test\tidy\modified\SteelDataHistorical.csv', index=False)
-SteelDataProjection.to_csv(r'C:\GitHub\pandas_test\tidy\modified\SteelDataprojection.csv', index=False)
+SteelDataHistorical.to_csv('modified\SteelDataHistorical.csv', index=False)
+SteelDataProjection.to_csv('modified\SteelDataprojection.csv', index=False)
