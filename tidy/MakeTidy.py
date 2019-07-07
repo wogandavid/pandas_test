@@ -3,7 +3,7 @@
 import numpy as numpy
 import pandas as pd
 
-df_steel = pd.read_csv('IS_production7th.csv')
+df_steel = pd.read_csv(r'C:\GitHub\pandas_test\tidy\raw\IS_production7th.csv')
 df_steel.head()
 
 # using melt
