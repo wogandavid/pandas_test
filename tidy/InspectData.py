@@ -17,11 +17,11 @@ SteelDataHistorical['SteelProductionperCapita'] = SteelDataHistorical['SteelProd
 # visual inspection of data
 plt.scatter(SteelDataHistorical['GDPperCapita'],SteelDataHistorical['SteelProductionperCapita'])
 
-# Drop NaN 
-SteelDataHistorical.dropna(inplace=True)
-
 # replace negative values with NaN
 SteelDataHistorical[SteelDataHistorical.SteelProductionperCapita < 0] = np.NaN
+
+# Drop NaN 
+SteelDataHistorical.dropna(inplace=True)
 
 # write prepared data to csv
 SteelDataHistorical.to_csv(r'C:\GitHub\pandas_test\tidy\SteelDataHistoricalPrepared.csv', index=False)
