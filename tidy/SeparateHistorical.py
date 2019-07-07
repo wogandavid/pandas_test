@@ -10,3 +10,7 @@ SteelDataHistorical = SteelData[SteelData.Year <= 2016]
 
 # store all values after 2016 as projections
 SteelDataProjection = SteelData[SteelData.Year > 2016]
+
+# write separated dataframes to csv
+SteelDataHistorical.to_csv(r'C:\GitHub\pandas_test\tidy\SteelDataHistorical.csv', index=False)
+SteelDataProjection.to_csv(r'C:\GitHub\pandas_test\tidy\SteelDataprojection.csv', index=False)
