@@ -19,4 +19,4 @@ molten = (df_steel.set_index(['Economy','Indicator'])
                   .reset_index())
 
 # write to csv
-molten.to_csv(r'C:\GitHub\pandas_test\tidy\molten.csv', index=False)
+molten.to_csv(r'C:\GitHub\pandas_test\tidy\modified\molten.csv', index=False)
