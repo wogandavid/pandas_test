@@ -3,7 +3,7 @@
 import numpy as numpy
 import pandas as pd
 
-df_steel = pd.read_csv('IS_production2.csv')
+df_steel = pd.read_csv('IS_production7th.csv')
 df_steel.head()
 
 # using melt
@@ -17,3 +17,6 @@ molten = (df_steel.set_index(['Economy','Indicator'])
                   .rename_axis(['Year'], axis=1)
                   .stack().unstack('Indicator')
                   .reset_index())
+
+# write to csv
+molten.to_csv(r'C:\GitHub\pandas_test\tidy\molten.csv', index=False)
