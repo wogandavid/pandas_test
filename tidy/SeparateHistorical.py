@@ -2,8 +2,16 @@
 # historical = before 2016
 # projection = 2016-2050
 
+# import libraries
+import numpy as np
+import pandas as pd
+
 # read in tidy steel data
 SteelData = pd.read_csv('molten.csv')
+
+# rename the columns
+NewNames = {'ITM':'SteelProduction','POP':'Population'}
+SteelData.rename(columns=NewNames, inplace=True)
 
 # store all values up up to, and including, 2016 in one dataframe
 SteelDataHistorical = SteelData[SteelData.Year <= 2016]
