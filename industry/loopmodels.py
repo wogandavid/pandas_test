@@ -23,9 +23,6 @@ models = {economy: LinearRegression() for economy in economies}
 df = (SteelDataHistoricalPrepared.set_index('Economy')
                                  .drop(['Year','GDP','SteelProduction','Population'], axis=1))
 
-target = df['SteelProductionperCapita']
-feature = df['GDPperCapita'].values.reshape(-1,1)
-
 # loop over economy-model pairs
 for economy, model in models.items():
         model.fit(df.loc[economy, :].drop('SteelProductionperCapita', axis=1),df.loc[economy, 'SteelProductionperCapita'])
