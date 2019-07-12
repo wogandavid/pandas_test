@@ -35,5 +35,7 @@ SteelDataHistorical[SteelDataHistorical.SteelProductionperCapita < 0] = np.NaN
 # Drop NaN 
 SteelDataHistorical.dropna(inplace=True)
 
+SteelDataHistorical = SteelDataHistorical.astype({"Year": int})
+
 # write prepared data to csv
 SteelDataHistorical.to_csv('modified\SteelDataHistoricalPrepared.csv', index=False)
