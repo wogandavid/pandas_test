@@ -1,6 +1,7 @@
+# MakeTidy.py
 # https://stackoverflow.com/questions/45066873/pandas-melt-with-multiple-value-vars
 
-import numpy as numpy
+import numpy as np
 import pandas as pd
 
 df_steel = pd.read_csv('raw\IS_production7th.csv')

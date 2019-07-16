@@ -1,6 +1,7 @@
+# SeparateHistorical.py
 # this script separates historical data from future projections
-# historical = before 2016
-# projection = 2016-2050
+# historical = up to 2016
+# projection = 2017-2050
 
 # import libraries
 import numpy as np

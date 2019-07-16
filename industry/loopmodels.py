@@ -1,3 +1,4 @@
+# LoopModels.py
 # create linear models for all 21 economies
 
 # step 1: create dictionary of model instances
@@ -21,11 +22,11 @@ models = {economy: LinearRegression() for economy in economies}
 
 # set Economy as index and set target vector
 df = (SteelDataHistoricalPrepared.set_index('Economy')
-                                 .drop(['GDP','SteelProduction','Population'], axis=1))
+                                 .drop(['GDP','SteelProduction','Population','GDPperCapita','SteelProductionperCapita'], axis=1))
 
 # loop over economy-model pairs to fit regression
 for economy, model in models.items():
-        model.fit(df.loc[economy, :].drop('SteelProductionperCapita', axis=1),df.loc[economy, 'SteelProductionperCapita'])
+        model.fit(df.loc[economy, :].drop('lnSteelProductionperCapita', axis=1),df.loc[economy, 'lnSteelProductionperCapita'])
 #        print(model.coef_)
 
 # loop over economy-model pairs to make prediction and write prediction to csv, one for each economy
@@ -34,10 +35,11 @@ df2 = SteelDataHistoricalPrepared[['Economy','Year']]
 filelist = []
 #series_list = []
 for economy, model in models.items():
-        prediction = model.predict(df.loc[economy, :].drop('SteelProductionperCapita', axis=1))
+        prediction = model.predict(df.loc[economy, :].drop('lnSteelProductionperCapita', axis=1))
 #        series_list.append(pd.Series(data=prediction, index = index2))
         results = df2[df2.Economy == economy]
         results['prediction'] = prediction
+        results['prediction exp'] = np.exp(prediction)
 #        results = pd.Series(data=prediction, index=df.loc[economy,'Year'])
         newfilename = '%sPrediction.csv' %economy
         results.to_csv('results\%s' %newfilename, header=True)
@@ -54,8 +56,8 @@ dfResults['GDPperCapita'] = SteelDataHistoricalPrepared['GDPperCapita']
 
 # plot using seaborn
 import seaborn as sns
-g = sns.lmplot(x="GDPperCapita", 
-               y="prediction", 
+g = sns.lmplot(x="Year", 
+               y="prediction exp", 
                col="Economy", 
                data=dfResults, 
                col_wrap=3,
