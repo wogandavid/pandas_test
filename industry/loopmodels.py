@@ -59,7 +59,7 @@ for economy in economies:
         df_list.append(pd.read_csv('results\%s' %newfilename))
 dfResults = pd.concat(df_list).drop('Unnamed: 0', axis=1)
 dfResults['GDPperCapita'] = SteelDataHistoricalPrepared['GDPperCapita']
-dfResults.to_csv('alleconomies.csv')
+dfResults.to_csv('results\SteelPredictionsAll.csv')
 
 # plot using seaborn
 import seaborn as sns
