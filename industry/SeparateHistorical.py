@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 # read in tidy steel data
-SteelData = pd.read_csv('modified\molten.csv')
+SteelData = pd.read_csv('modified\TidySteel.csv')
 
 # rename the columns
 NewNames = {'ITM':'SteelProduction','POP':'Population'}
