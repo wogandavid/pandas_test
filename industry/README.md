@@ -11,7 +11,7 @@ The steps are:
 5. SingleLinearRegression - runs a linear regression for one economy. Plot the results.
 6. LoopModels - runs linear regressions for each economy and plots the results.
 
-**Note**: the raw data is stored in its own folder called "raw". This file should not be modified. All modifications to the data (cleaning, reshaping, adding columns, creating new datasets) should be saved in "modified".
+**Note**: the raw data is stored in its own folder called "raw". This file should not be modified. All modifications to the data (cleaning, reshaping, adding columns, creating new datasets) should be saved in "modified". Final results are saved in "results".
 
 To run these files, you will need:
 - [Anaconda](https://www.anaconda.com/)
