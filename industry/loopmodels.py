@@ -4,6 +4,9 @@
 # step 1: create dictionary of model instances
 # step 2: loop over economy, model pairs
 
+# for future:
+# https://www.dataquest.io/blog/settingwithcopywarning/
+
 # import libraries
 import pandas as pd
 import numpy as np
@@ -12,29 +15,15 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 import seaborn as sns
 
-#read csv
-SteelDataHistoricalPrepared = pd.read_csv('modified\SteelDataHistoricalPrepared.csv')
-SteelDataProjectionPrepared = pd.read_csv('modified\SteelDataProjectionPrepared.csv')
-
-# get list of economies
-economies = SteelDataHistoricalPrepared.Economy.unique()
-
-# create economy-model pairs
-models = {economy: LinearRegression() for economy in economies}
-
-# set Economy as index and set target vector by dropping all other columns except lnGDPperCapita and lnSteelProductionperCapita
-df = (SteelDataHistoricalPrepared.set_index('Economy')
-                                 .drop(['GDP','SteelProduction','Population','GDPperCapita','SteelProductionperCapita'], axis=1))
+# define functions to perform regressions and predictions
 
 # loop over economy-model pairs to fit regression
-for economy, model in models.items():
-        model.fit(df.loc[economy, :].drop('lnSteelProductionperCapita', axis=1),df.loc[economy, 'lnSteelProductionperCapita'])
-
-#HistoricallnGDPperCapita = (SteelDataHistoricalPrepared.set_index('Economy')
-#                                 .drop(['GDP','SteelProduction','Population','GDPperCapita','SteelProductionperCapita','lnSteelProductionperCapita'], axis=1))
-
-#FuturelnGDPperCapita = (SteelDataProjectionPrepared.set_index('Economy')
-#                                                   .drop(['GDP','Population','GDPperCapita'], axis=1))     
+def run_regression(models, economies, df):
+        for economy, model in models.items():
+                (model.fit(df.loc[economy, :]
+                      .drop('lnSteelProductionperCapita', axis=1),
+                    df.loc[economy, 'lnSteelProductionperCapita']))
+        return models            
 
 # create function for performing prediction and writing results
 # loop over economy-model pairs to make prediction and write prediction to csv, one for each economy
@@ -60,15 +49,33 @@ def run_prediction(models, economies, years, df):
         
         return dfResults
 
+# Now use the above functions for running regression and making predictions
+#read csv
+SteelDataHistoricalPrepared = pd.read_csv('modified\SteelDataHistoricalPrepared.csv')
+SteelDataProjectionPrepared = pd.read_csv('modified\SteelDataProjectionPrepared.csv')
+
+# get list of economies and create economy-model pairs
+economies = SteelDataHistoricalPrepared.Economy.unique()
+models = {economy: LinearRegression() for economy in economies}
+
+# set Economy as index and set target vector by dropping all other columns except lnGDPperCapita and lnSteelProductionperCapita
+df1 = (SteelDataHistoricalPrepared.set_index('Economy')
+                                 .drop(['GDP','SteelProduction','Population','GDPperCapita','SteelProductionperCapita'], axis=1))
+
+# run regression
+SteelRegressionModel = run_regression(models, economies, df1)
+
 # run projection using future values of GDP per capita
 HistoricalYears = SteelDataHistoricalPrepared[['Economy','Year']]
-HistoricallnGDPperCapita = HistoricallnGDPperCapita[['Year','lnGDPperCapita']]
-HistoricalPredictionResults = run_prediction(models, economies, HistoricalYears, HistoricallnGDPperCapita)
+HistoricallnGDPperCapita = (SteelDataHistoricalPrepared.set_index('Economy')
+                                 .drop(['GDP','SteelProduction','Population','GDPperCapita','SteelProductionperCapita','lnSteelProductionperCapita'], axis=1))
+HistoricalPredictionResults = run_prediction(SteelRegressionModel, economies, HistoricalYears, HistoricallnGDPperCapita)
 
 # run projection using future values of GDP per capita
 FutureYears = SteelDataProjectionPrepared[['Economy','Year']]
-FuturelnGDPperCapita = FuturelnGDPperCapita[['Year','lnGDPperCapita']]
-ProjectionResults = run_prediction(models, economies, FutureYears, FuturelnGDPperCapita)
+FuturelnGDPperCapita = (SteelDataProjectionPrepared.set_index('Economy')
+                                                   .drop(['GDP','Population','GDPperCapita'], axis=1))     
+ProjectionResults = run_prediction(SteelRegressionModel, economies, FutureYears, FuturelnGDPperCapita)
 
 # define function to plot using matplotlib
 def plot_results(economies, df1, df2):
