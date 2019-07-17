@@ -65,13 +65,13 @@ df1 = (SteelDataHistoricalPrepared.set_index('Economy')
 # run regression
 SteelRegressionModel = run_regression(models, economies, df1)
 
-# run projection using future values of GDP per capita
+# make predictions using future values of GDP per capita
 HistoricalYears = SteelDataHistoricalPrepared[['Economy','Year']]
 HistoricallnGDPperCapita = (SteelDataHistoricalPrepared.set_index('Economy')
                                  .drop(['GDP','SteelProduction','Population','GDPperCapita','SteelProductionperCapita','lnSteelProductionperCapita'], axis=1))
 HistoricalPredictionResults = run_prediction(SteelRegressionModel, economies, HistoricalYears, HistoricallnGDPperCapita)
 
-# run projection using future values of GDP per capita
+# make predictions using future values of GDP per capita
 FutureYears = SteelDataProjectionPrepared[['Economy','Year']]
 FuturelnGDPperCapita = (SteelDataProjectionPrepared.set_index('Economy')
                                                    .drop(['GDP','Population','GDPperCapita'], axis=1))     
@@ -85,14 +85,14 @@ def plot_results(economies, df1, df2):
                 df11=df1[df1['Economy']==economy]
                 df21=df2[df2['Economy']==economy]
                 ax = fig.add_subplot(7,3,num)
-                ax.plot(df11['Year'], df11[['prediction exp']],'b')
-                ax.plot(df21['Year'], df21[['prediction exp']],'r')
+                ax.plot(df11['Year'], df11[['prediction exp']],'r')
+                ax.plot(df21['Year'], df21[['prediction exp']],'b')
                 ax.set_title(economy)
 
                 #plt.tight_layout()
         plt.show()
 
 # plot historical and future predictions
-plot_results(economies, ProjectionResults, HistoricalPredictionResults)
+plot_results(economies, HistoricalPredictionResults, ProjectionResults)
 
 
