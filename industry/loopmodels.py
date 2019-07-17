@@ -30,11 +30,11 @@ df = (SteelDataHistoricalPrepared.set_index('Economy')
 for economy, model in models.items():
         model.fit(df.loc[economy, :].drop('lnSteelProductionperCapita', axis=1),df.loc[economy, 'lnSteelProductionperCapita'])
 
-HistoricallnGDPperCapita = (SteelDataHistoricalPrepared.set_index('Economy')
-                                 .drop(['GDP','SteelProduction','Population','GDPperCapita','SteelProductionperCapita','lnSteelProductionperCapita'], axis=1))
+#HistoricallnGDPperCapita = (SteelDataHistoricalPrepared.set_index('Economy')
+#                                 .drop(['GDP','SteelProduction','Population','GDPperCapita','SteelProductionperCapita','lnSteelProductionperCapita'], axis=1))
 
-FuturelnGDPperCapita = (SteelDataProjectionPrepared.set_index('Economy')
-                                                   .drop(['GDP','Population','GDPperCapita'], axis=1))     
+#FuturelnGDPperCapita = (SteelDataProjectionPrepared.set_index('Economy')
+#                                                   .drop(['GDP','Population','GDPperCapita'], axis=1))     
 
 # create function for performing prediction and writing results
 # loop over economy-model pairs to make prediction and write prediction to csv, one for each economy
@@ -62,10 +62,12 @@ def run_prediction(models, economies, years, df):
 
 # run projection using future values of GDP per capita
 HistoricalYears = SteelDataHistoricalPrepared[['Economy','Year']]
+HistoricallnGDPperCapita = HistoricallnGDPperCapita[['Year','lnGDPperCapita']]
 HistoricalPredictionResults = run_prediction(models, economies, HistoricalYears, HistoricallnGDPperCapita)
 
 # run projection using future values of GDP per capita
 FutureYears = SteelDataProjectionPrepared[['Economy','Year']]
+FuturelnGDPperCapita = FuturelnGDPperCapita[['Year','lnGDPperCapita']]
 ProjectionResults = run_prediction(models, economies, FutureYears, FuturelnGDPperCapita)
 
 # define function to plot using matplotlib
@@ -85,6 +87,5 @@ def plot_results(economies, df1, df2):
 
 # plot historical and future predictions
 plot_results(economies, ProjectionResults, HistoricalPredictionResults)
-plot_results(economies, ProjectionResults)
 
 
