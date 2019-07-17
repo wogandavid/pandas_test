@@ -1,3 +1,4 @@
+# InspectHistorical.py
 # Inspect data and prepare for regression
 
 # import Pandas so we can manipulate data
@@ -15,10 +16,7 @@ SteelDataHistorical = pd.read_csv('modified\SteelDataHistorical.csv')
 SteelDataHistorical['GDPperCapita'] = SteelDataHistorical['GDP'].div(SteelDataHistorical['Population'])
 SteelDataHistorical['SteelProductionperCapita'] = SteelDataHistorical['SteelProduction'].div(SteelDataHistorical['Population'])
 
-# visual inspection of data
-#plt.scatter(SteelDataHistorical['GDPperCapita'],SteelDataHistorical['SteelProductionperCapita'])
-
-g = sns.lmplot(x="GDPperCapita", 
+HistoricalPlot = sns.lmplot(x="GDPperCapita", 
                y="SteelProductionperCapita", 
                col="Economy", 
                data=SteelDataHistorical, 
@@ -29,13 +27,5 @@ g = sns.lmplot(x="GDPperCapita",
                sharey= False,
                fit_reg = False)
 
-# replace negative values with NaN
-SteelDataHistorical[SteelDataHistorical.SteelProductionperCapita < 0] = np.NaN
-
-# Drop NaN 
-SteelDataHistorical.dropna(inplace=True)
-
-SteelDataHistorical = SteelDataHistorical.astype({"Year": int})
-
 # write prepared data to csv
-SteelDataHistorical.to_csv('modified\SteelDataHistoricalPrepared.csv', index=False)
+SteelDataHistorical.to_csv('modified\SteelDataHistoricalNeedsCleaning.csv', index=False)             

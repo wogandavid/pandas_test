@@ -1,13 +1,14 @@
+# SeparateHistorical.py
 # this script separates historical data from future projections
-# historical = before 2016
-# projection = 2016-2050
+# historical = up to 2016
+# projection = 2017-2050
 
 # import libraries
 import numpy as np
 import pandas as pd
 
 # read in tidy steel data
-SteelData = pd.read_csv('modified\molten.csv')
+SteelData = pd.read_csv('modified\TidySteel.csv')
 
 # rename the columns
 NewNames = {'ITM':'SteelProduction','POP':'Population'}
