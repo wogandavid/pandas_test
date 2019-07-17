@@ -18,10 +18,9 @@ SteelDataProjectionPreparedAUS = SteelDataProjectionPrepared[SteelDataProjection
 X = SteelDataProjectionPreparedAUS['lnGDPperCapita'].values.reshape(-1,1)
 
 # make a prediction using the model
-reg = LinearRegression()
 prediction = reg.predict(X)
 prediction_exp = np.exp(prediction)
 
-plt.plot(SteelDataHistoricalPreparedAUS['Year'],prediction_exp)
+plt.plot(SteelDataProjectionPreparedAUS['Year'],prediction_exp)
 
 plt.show()

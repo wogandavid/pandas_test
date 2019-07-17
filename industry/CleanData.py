@@ -1,5 +1,6 @@
 # CleanData.py
-# this script creates plots of GDP per capita vs steel production for each economy
+# this script cleans the dataset by removing negative values, replacing them with NaN, then dropping all rows that contain NaN
+# Then, plot cleaned data for each economy
 # https://seaborn.pydata.org/generated/seaborn.lmplot.html
 
 import pandas as pd
